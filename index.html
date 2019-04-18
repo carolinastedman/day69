@@ -5,45 +5,69 @@
     <meta charset="UTF-8">
     <title>day69</title>
     <style>
-        .odd{
-  background: green;
-  border-style:solid;
+        .odd {
+  background: lightblue;
+  border-style: solid;
+  border-color: lightyellow;
 }
 
-.even{
-  background:pink;
-  border-style:solid;
+.even {
+  background: lightyellow;
+  border-style: solid;
+  border-color: lightblue;
 }
 
-input{
-/*   display:none; */
-/*   visibility:hidden; */
+input {
+  margin: 15px;
+  /*   display:none; */
+  /*   visibility:hidden; */
 }
 
 .correct {
-        background-color: #00DD00;
-    }
-    
-    .incorrect {
-        background-color: red;
-    }
+  background-color: #b8ffa0;
+}
+
+.incorrect {
+  background-color: #fc7676;
+}
+
 
     </style>
 </head>
 
 <body>
     <h3>SAAS Incoming 9th grader Math Skill Inventory</h3>
+    <h4>Correct: <span id="numCorrect">0</span></h4>
     <h4>Level 1: Pre Algebra</h4>
     <div class="odd">
-        Evaluate: \(5-3(x-1)\) when x = 7
-        <input type="text" data-answer="-13">;
+        Evaluate: 5-3(x-1) when x = 7
+        <input type="text" data-answer="-13">
+        <!--   -13 -->
     </div>
     <div class="even">
-        Evaluate: \(4x^2 - 5x + 1\) when x = -2
+        Evaluate: 4x<sup>2</sup> -5x + 1 when x = -2
         <input type="text" data-answer="27">
+        <!--   27 -->
     </div>
     <div class="odd">
-        \((\sqrt(2)*sqrt(3))^2\)
+        \((\sqrt2*\sqrt3)^2\)
+        <input type="text" data-answer="6">
+        <!-- 6 -->
+    </div>
+    <div class="even">
+        2<sup>3</sup>
+        <input type="text" data-answer="8">
+        <!--   8 -->
+    </div>
+    <div class="odd">
+        |\(\sqrt16\)|
+        <input type="text" data-answer="4">
+        <!-- 4 -->
+    </div>
+    <div class="even">
+        |\(\sqrt64\)|
+        <input type="text" data-answer="8">
+        <!--   8 -->
     </div>
     <div id="theQuestions">
     </div>
@@ -51,30 +75,31 @@ input{
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML'></script>
     <script id="rendered-js">
     console.clear();
-
     $('input').change(checkAnswer);
 
-    function checkAnswer(e) {
-        console.log();
-    }
+    // function checkAnswer(e) {
+    //     console.log();
+    // }
 
-    function makeQ(q, a, level) {
+    function makeQ(q, a, qtex, level) {
         let question = {}
         question.q = q;
         question.a = a;
+        question.qtex = qtex;
         question.level = level;
         return question;
     }
 
     let questions = [];
     questions.push(makeQ("2^3", "8", 1));
+    questions.push(makeQ("\\dfrac{1}{2}", ".5", 1));
     questions.push(makeQ("\\sqrt{16}", "4", 1));
-    console.log(questions);
+    // console.log(questions);
 
 
-    function makeTest(e) {
+      function makeTest(e) {
         for (let i = 0; i < questions.length; i++) {
-            console.log(questions[i]);
+           // console.log(questions[i]);
             theQuestion = '<div class="odd">';
             theQuestion += '\\(';
             theQuestion += questions[i].q;
@@ -88,15 +113,15 @@ input{
         MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
 
     }
-
     makeTest();
 
     $("input").change(checkAnswer);
 
+
     function checkAnswer(e) {
         correct = $(this).data("answer");
         response = $(this).val();
-        console.log(correct, response);
+        // console.log(correct, response);
         numInputs = $("input").length;
 
         if (correct == response) {
@@ -105,8 +130,11 @@ input{
             $("#numCorrect").text(numCorrect * 1 + 1);
         } else {
             $(this).removeClass("correct").addClass("incorrect");
+            var numCorrect = $("#numCorrect").text();
+            $("#numCorrect").text(numCorrect * 1 + 1);
+
         }
-        console.log('checkAnswer', correct, response);
+        // console.log('checkAnswer', correct, response);
     }
     </script>
 </body>
